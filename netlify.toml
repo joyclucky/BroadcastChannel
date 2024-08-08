@@ -1,5 +1,5 @@
 ## Telegram 频道用户名，必须配置。 t.me/ 后面那串字符
-CHANNEL=am95bHVja3kuZ28u
+CHANNEL=joylucky_blog
 
 ## 语言和时区设置，语言选项见[dayjs](https://github.com/iamkun/dayjs/tree/dev/src/locale)
 LOCALE=zh-cn
