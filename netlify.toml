@@ -11,8 +11,9 @@ TWITTER=joychan27
 GITHUB=joyclucky
 
 ## 下面两个社交媒体需要为 URL
-DISCORD=https://DISCORD.com
+TELEGRAM=https://t.me
 TWITTER=https://x.com
+GITHUB=https://github.com
 
 ## 头部尾部代码注入，支持 HTML
 FOOTER_INJECT=FOOTER_INJECT
