@@ -9,9 +9,9 @@
 ## ✨ 特性
 
 - **将 Telegram Channel 转为微博客**
-- **SEO 友好**
+- **SEO 友好** `/sitemap.xml`
 - **浏览器端 0 JS**
-- **提供 RSS 和 RSS JSON**
+- **提供 RSS 和 RSS JSON** `/rss.xml` `/rss.json`
 
 ## 🪧 演示
 
@@ -23,6 +23,7 @@
 - [APPDO 数字生活指南](https://mini.appdo.xyz/)
 - [85.60×53.98卡粉订阅/提醒](https://tg.docofcard.com/)
 - [新闻在花频道](https://tg.istore.app/)
+- [ALL About RSS](https://blog.rss.tips/)
 - [Charles Chin's Whisper](https://memo.eallion.com/)
 - [PlayStation 新闻转发](https://playstationnews.pages.dev)
 - [Yu's Life](https://daily.pseudoyu.com/)
@@ -32,6 +33,16 @@
 - [Steve Studio](https://tgc.surgeee.me/)
 - [LiFePO4:沙雕吐槽](https://lifepo4.top)
 - [Hotspot Hourly](https://hourly.top/)
+- [大河马中文财经新闻分享](https://a.xiaomi318.com/)
+- [\_My. Tricks 🎩 Collection](https://channel.mykeyvans.com)
+- [小报童专栏精选](https://xiaobaotong.genaiprism.site/)
+- [Fake news](https://fake-news.csgo.ovh/)
+- [miyi23's Geekhub资源分享](https://gh.miyi23.top/)
+- [Magazine｜期刊杂志｜财新周刊](https://themagazine.top)
+- [Remote Jobs & Cooperation](https://share-remote-jobs.vercel.app/)
+- [甬哥侃侃侃--频道发布](https://ygkkktg.pages.dev)
+- [Fugoou.log](https://fugoou.xyz)
+- [Bboysoul的博客](https://tg.bboy.app/)
 
 ### 平台
 
