@@ -45,6 +45,8 @@
 - [Bboysoul的博客](https://tg.bboy.app/)
 - [MakerHunter](https://share.makerhunter.com/)
 - [ChatGPT/AI新闻聚合](https://g4f.icu/)
+- [Abner's memos](https://memos.abnerz6.top/)
+- [小众软件的发现](https://talk.appinn.net/)
 
 ### 平台
 
@@ -113,6 +115,21 @@ SENTRY_PROJECT=SENTRY_PROJECT
 ## Telegram 主机名称和静态资源代理，不建议修改
 HOST=telegram.dog
 STATIC_PROXY=
+
+## 启用谷歌站内搜索
+GOOGLE_SEARCH_SITE=memo.miantiao.me
+
+## 启用标签页, 标签使用英文逗号分割
+TAGS=标签A,标签B,标签C
+
+## 展示评论
+COMMENTS=true
+
+## 链接页面中的超链接, 使用英文逗号和分号分割
+LINKS=Title1,URL1;Title2,URL3;Title3,URL3;
+
+## 侧边栏导航项, 使用英文逗号和分号分割
+NAVS=Title1,URL1;Title2,URL3;Title3,URL3;
 ```
 
 ## 🙋🏻 常问问题
