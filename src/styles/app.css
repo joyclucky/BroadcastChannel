@@ -21,10 +21,14 @@
   --color-link-hover: #3f4850;
   --color-line: rgba(0, 0, 0, 0.05);
   --color-footer: #666666;
+  --color-paid: #9a6a00;
+  --color-paid-line: rgba(154, 106, 0, 0.28);
+  --color-paid-surface: rgba(255, 196, 0, 0.12);
   --shadow-soft:
     0 1px 2px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02), 0 4px 8px rgba(0, 0, 0, 0.02),
     0 8px 16px rgba(0, 0, 0, 0.02);
   --radius-panel: 3px;
+  --radius-chip: 4px;
   --radius-media: 8px;
 }
 
@@ -80,7 +84,7 @@
 
   hr {
     border: none;
-    height: 2px;
+    height: 1px;
     color: var(--color-line);
     background-color: var(--color-line);
     margin-top: 2rem;
