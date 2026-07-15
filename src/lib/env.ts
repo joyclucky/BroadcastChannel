@@ -2,6 +2,8 @@ import type { AstroEnvContext, NavItem } from '../types'
 
 type Env = Record<string, string | undefined>
 
+export const DEFAULT_TELEGRAM_HOST = 'telegram.me'
+
 function getProcessEnv(name: string): string | undefined {
   return (Reflect.get(globalThis, 'process') as { env?: Env } | undefined)?.env?.[name]
 }
@@ -22,6 +24,13 @@ export function getStaticProxy(
   Astro: AstroEnvContext,
 ): string {
   return getEnv(env, Astro, 'STATIC_PROXY') ?? '/static/'
+}
+
+export function getTelegramHost(
+  env: Env,
+  Astro: AstroEnvContext,
+): string {
+  return getEnv(env, Astro, 'TELEGRAM_HOST') ?? DEFAULT_TELEGRAM_HOST
 }
 
 export function getPodcastUrl(

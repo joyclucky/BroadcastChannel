@@ -56,7 +56,7 @@ function renderPostContent(
     .join('')
 }
 
-function getReactions($: CheerioAPI, message: MessageSelection, staticProxy: string): Reaction[] {
+function getReactions($: CheerioAPI, message: MessageSelection, telegramHost: string, staticProxy: string): Reaction[] {
   const reactions: Reaction[] = []
 
   for (const reactionNode of message.find('.tgme_widget_message_reactions .tgme_reaction').toArray()) {
@@ -74,7 +74,7 @@ function getReactions($: CheerioAPI, message: MessageSelection, staticProxy: str
     const tgEmoji = reaction.find('tg-emoji')
     if (tgEmoji.length && !emoji) {
       emojiId = tgEmoji.attr('emoji-id')
-      const customEmojiImage = getCustomEmojiImage(emojiId, staticProxy)
+      const customEmojiImage = getCustomEmojiImage(emojiId, { telegramHost, staticProxy })
       if (customEmojiImage) {
         emojiImage = customEmojiImage
       }
@@ -103,20 +103,20 @@ function getReactions($: CheerioAPI, message: MessageSelection, staticProxy: str
 }
 
 export async function extractPost($: CheerioAPI, item: AnyNode | null, options: ExtractPostOptions): Promise<Post> {
-  const { channel, staticProxy, index = 0, reactionsEnabled } = options
+  const { channel, telegramHost, staticProxy, index = 0, reactionsEnabled } = options
   const message = item ? $(item).find('.tgme_widget_message') : $('.tgme_widget_message')
   normalizeUrlAttributes($, message)
   const hasReplyText = message.find('.js-message_reply_text').length > 0
   const content = await modifyHTMLContent(
     $,
     message.find(hasReplyText ? '.tgme_widget_message_text.js-message_text' : '.tgme_widget_message_text'),
-    { index, staticProxy, normalizeUrls: false },
+    { index, telegramHost, staticProxy, normalizeUrls: false },
   )
   const contentText = content.text()
   const title = contentText.match(TITLE_PREVIEW_REGEX)?.[0] ?? contentText
   const id = message.attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '') ?? ''
   const tags = collectTags($, content)
-  const contentHtml = renderPostContent($, message, content, { channel, staticProxy, index, reactionsEnabled, id, title })
+  const contentHtml = renderPostContent($, message, content, { channel, telegramHost, staticProxy, index, reactionsEnabled, id, title })
 
   return {
     id,
@@ -126,6 +126,6 @@ export async function extractPost($: CheerioAPI, item: AnyNode | null, options: 
     tags,
     text: contentText,
     content: contentHtml,
-    reactions: reactionsEnabled ? getReactions($, message, staticProxy) : [],
+    reactions: reactionsEnabled ? getReactions($, message, telegramHost, staticProxy) : [],
   }
 }

@@ -23,6 +23,7 @@ export interface MessageAssetOptions extends IndexedStaticProxyOptions {
 
 export interface ExtractPostOptions {
   channel: string
+  telegramHost: string
   staticProxy: string
   index?: number
   reactionsEnabled?: boolean
@@ -31,6 +32,7 @@ export interface ExtractPostOptions {
 export interface LoadedChannelDocument {
   $: CheerioAPI
   channel: string
+  telegramHost: string
   staticProxy: string
   reactionsEnabled?: boolean
 }

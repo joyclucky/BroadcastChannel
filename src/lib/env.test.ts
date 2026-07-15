@@ -1,6 +1,6 @@
 import type { AstroEnvContext } from '../types'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { getEnv, parseCsvList, parseDelimitedItems } from './env'
+import { getEnv, getTelegramHost, parseCsvList, parseDelimitedItems } from './env'
 
 const astroContext: AstroEnvContext = {}
 
@@ -29,6 +29,24 @@ describe('getEnv', () => {
         'TEST_ENV_PRIORITY',
       ),
     ).toBe('import-value')
+  })
+})
+
+describe('getTelegramHost', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs()
+  })
+
+  it('defaults to telegram.me', () => {
+    vi.stubEnv('TELEGRAM_HOST', undefined)
+
+    expect(getTelegramHost({}, astroContext)).toBe('telegram.me')
+  })
+
+  it('uses the configured host', () => {
+    vi.stubEnv('TELEGRAM_HOST', 'telegram.dog')
+
+    expect(getTelegramHost({}, astroContext)).toBe('telegram.dog')
   })
 })
 

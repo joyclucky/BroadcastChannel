@@ -3,7 +3,7 @@ import type { LoadedChannelDocument, RequestContext } from './types'
 import * as cheerio from 'cheerio'
 import { defineCachedFunction } from 'ocache'
 import { $fetch } from 'ofetch'
-import { getBooleanEnv, getEnv, getStaticProxy } from '../env'
+import { getBooleanEnv, getEnv, getStaticProxy, getTelegramHost } from '../env'
 
 interface TelegramHtmlParams {
   host: string
@@ -69,7 +69,7 @@ export async function loadChannelDocument(
   params: GetChannelInfoParams & { id?: string } = {},
 ): Promise<LoadedChannelDocument> {
   const { before, after, q, id } = params
-  const host = getEnv(import.meta.env, context, 'TELEGRAM_HOST') ?? 't.me'
+  const host = getTelegramHost(import.meta.env, context)
   const channel = getRequiredEnv(context, 'CHANNEL')
   const staticProxy = getStaticProxy(import.meta.env, context)
   const reactionsEnabled = getBooleanEnv(import.meta.env, context, 'REACTIONS')
@@ -86,6 +86,7 @@ export async function loadChannelDocument(
   return {
     $: cheerio.load(html, {}, false),
     channel,
+    telegramHost: host,
     staticProxy,
     reactionsEnabled,
   }
