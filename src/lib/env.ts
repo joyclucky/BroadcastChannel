@@ -1,4 +1,4 @@
-import type { AstroEnvContext, NavItem } from '../types'
+import type { NavItem } from '../types'
 
 type Env = Record<string, string | undefined>
 
@@ -11,46 +11,29 @@ function getProcessEnv(name: string): string | undefined {
 /**
  * Runtime envs must win over Vite's build-time import.meta.env values.
  */
-export function getEnv(
-  env: Env,
-  _Astro: AstroEnvContext,
-  name: string,
-): string | undefined {
-  return getProcessEnv(name) ?? env[name]
+export function getEnv(env: Env | undefined, name: string): string | undefined {
+  return getProcessEnv(name) ?? env?.[name]
 }
 
-export function getStaticProxy(
-  env: Env,
-  Astro: AstroEnvContext,
-): string {
-  return getEnv(env, Astro, 'STATIC_PROXY') ?? '/static/'
+export function getStaticProxy(env: Env): string {
+  return getEnv(env, 'STATIC_PROXY') ?? '/static/'
 }
 
-export function getTelegramHost(
-  env: Env,
-  Astro: AstroEnvContext,
-): string {
-  return getEnv(env, Astro, 'TELEGRAM_HOST') ?? DEFAULT_TELEGRAM_HOST
+export function getTelegramHost(env: Env): string {
+  return getEnv(env, 'TELEGRAM_HOST') ?? DEFAULT_TELEGRAM_HOST
 }
 
-export function getPodcastUrl(
-  env: Env,
-  Astro: AstroEnvContext,
-): string | undefined {
-  return getEnv(env, Astro, 'PODCAST')
+export function getTargetWhitelist(env: Env | undefined): string[] {
+  const hostnames = parseCsvList(getEnv(env, 'TARGET_WHITELIST'))
+    .map(hostname => hostname.toLowerCase())
+    .filter(isValidHostname)
+
+  return [...new Set(hostnames)]
 }
 
-export function isEnabled(value: string | boolean | undefined): boolean {
-  return value === true || value === 'true' || value === '1'
-}
-
-export function getBooleanEnv(
-  env: Env,
-  Astro: AstroEnvContext,
-  name: string,
-): boolean | undefined {
-  const value = getEnv(env, Astro, name)
-  return value === undefined ? undefined : isEnabled(value)
+export function getBooleanEnv(env: Env, name: string): boolean | undefined {
+  const value = getEnv(env, name)
+  return value === undefined ? undefined : value === 'true' || value === '1'
 }
 
 export function parseDelimitedItems(value = ''): NavItem[] {
@@ -70,4 +53,15 @@ export function parseCsvList(value = ''): string[] {
     .split(',')
     .map(item => item.trim())
     .filter(Boolean)
+}
+
+function isValidHostname(hostname: string): boolean {
+  if (hostname.length > 253 || !hostname.includes('.'))
+    return false
+
+  const labels = hostname.split('.')
+  if (labels.every(label => /^\d+$/.test(label)))
+    return false
+
+  return labels.every(label => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label))
 }

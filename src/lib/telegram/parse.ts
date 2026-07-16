@@ -13,7 +13,7 @@ function isNonEmptyString(value: string | null | undefined): value is string {
   return Boolean(value)
 }
 
-function collectTags($: CheerioAPI, content: MessageSelection): string[] {
+function rewriteTagLinksAndCollectTags($: CheerioAPI, content: MessageSelection): string[] {
   const tags: string[] = []
 
   for (const tagNode of content.find('a[href^="?q="]').toArray()) {
@@ -35,9 +35,15 @@ function renderPostContent(
   $: CheerioAPI,
   message: MessageSelection,
   content: MessageSelection,
-  options: ExtractPostOptions & { id: string, title: string },
+  options: {
+    channel: string
+    staticProxy: string
+    index: number
+    id: string
+    title: string
+  },
 ): string {
-  const { channel, staticProxy, index = 0, id, title } = options
+  const { channel, staticProxy, index, id, title } = options
 
   return [
     getForwardedFrom($, message),
@@ -115,8 +121,8 @@ export async function extractPost($: CheerioAPI, item: AnyNode | null, options: 
   const contentText = content.text()
   const title = contentText.match(TITLE_PREVIEW_REGEX)?.[0] ?? contentText
   const id = message.attr('data-post')?.replace(new RegExp(`${channel}/`, 'i'), '') ?? ''
-  const tags = collectTags($, content)
-  const contentHtml = renderPostContent($, message, content, { channel, telegramHost, staticProxy, index, reactionsEnabled, id, title })
+  const tags = rewriteTagLinksAndCollectTags($, content)
+  const contentHtml = renderPostContent($, message, content, { channel, staticProxy, index, id, title })
 
   return {
     id,

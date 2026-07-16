@@ -3,8 +3,7 @@ import type { IndexedStaticProxyOptions, MessageSelection, StaticProxyOptions } 
 import flourite from 'flourite'
 import prism, { ensurePrismLanguage } from '../prism'
 import { getCustomEmojiImage } from './emoji'
-import { proxyStyleUrls } from './renderers/html'
-import { normalizeUrlAttribute, normalizeUrlAttributes } from './url'
+import { normalizeUrlAttribute, normalizeUrlAttributes, proxyStyleUrls } from './url'
 
 interface ModifyHTMLContentOptions extends IndexedStaticProxyOptions {
   telegramHost?: string
@@ -71,8 +70,10 @@ export async function modifyHTMLContent($: CheerioAPI, content: MessageSelection
   }
 
   for (const preNode of content.find('pre').toArray()) {
+    const pre = $(preNode)
+    pre.addClass('code')
+
     try {
-      const pre = $(preNode)
       pre.find('br').replaceWith('\n')
 
       const code = pre.text()
