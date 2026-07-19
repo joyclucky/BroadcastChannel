@@ -71,6 +71,9 @@ Cloudflare Pages SSR 在当前 Astro 6 + @astrojs/cloudflare v13 下不受支持
 - 可选主题：[Sepia](https://github.com/Planetable/SiteTemplateSepia)
 - 可选主题灵感：[Terminal](https://github.com/panr/hugo-theme-terminal)
 - 可选主题灵感：[Aria](https://github.com/miantiao-me/astro-aria)
+- 可选主题视觉灵感：[Hacker News](https://news.ycombinator.com/)（由 Y Combinator 运营，独立实现，与其无官方关系）
+- 可选主题视觉灵感：[Telegram 公开频道预览](https://t.me/s/)（独立实现，与 Telegram Messenger Inc. 无官方关系）
+- 可选主题视觉灵感：[Zed 的 Agentic Engineering 页面](https://zed.dev/agentic-engineering)（独立实现，与 Zed Industries, Inc. 无官方关系）
 
 ## 🏗️ 部署
 
@@ -182,12 +185,15 @@ TARGET_WHITELIST=a.com,b.com
 | Terminal Green   | `/themes/terminal-green.css`   |
 | Terminal Cyan    | `/themes/terminal-cyan.css`    |
 | Terminal Magenta | `/themes/terminal-magenta.css` |
+| HN News          | `/themes/hn-news.css`          |
+| TG Channel       | `/themes/tg-channel.css`       |
+| ZAE              | `/themes/zae.css`              |
 
 ```env
 HEADER_INJECT='<link rel="stylesheet" href="/themes/aria.css">'
 ```
 
-不要直接加载 `/themes/terminal-base.css`；项目不存在 `/themes/terminal.css`。
+HN News、TG Channel 和 ZAE 是固定浅色主题。不要直接加载 `/themes/terminal-base.css`；项目不存在 `/themes/terminal.css`。
 
 完整配置、明暗模式、平台控制台写法、自定义 CSS 与安全边界见 **[THEMES.md](./THEMES.md)**。主题归属见 **[NOTICE.md](./NOTICE.md)**。
 

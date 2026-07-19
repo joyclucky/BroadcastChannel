@@ -15,6 +15,13 @@
     border-bottom: 1px solid var(--border-color);
   }
 
+  .hn-story,
+  .post-entry-avatar,
+  .post-entry-author,
+  .tg-message-meta {
+    display: none;
+  }
+
   .posts-feed > li:last-child .post-entry {
     margin-bottom: 0;
   }

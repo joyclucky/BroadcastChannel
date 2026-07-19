@@ -8,17 +8,24 @@ There is no `THEME` environment variable, theme registry, browser-side theme swi
 
 Use one of these exact `.env` configurations:
 
-| Theme            | Light and dark behavior         | `HEADER_INJECT`                                                               |
-| ---------------- | ------------------------------- | ----------------------------------------------------------------------------- |
-| Base             | Follows the system preference   | Leave unset or use `HEADER_INJECT=`                                           |
-| Sepia            | Fixed light, warm-paper palette | `HEADER_INJECT='<link rel="stylesheet" href="/themes/sepia.css">'`            |
-| Aria             | Follows the system preference   | `HEADER_INJECT='<link rel="stylesheet" href="/themes/aria.css">'`             |
-| Terminal Amber   | Fixed dark, amber accent        | `HEADER_INJECT='<link rel="stylesheet" href="/themes/terminal-amber.css">'`   |
-| Terminal Green   | Fixed dark, green accent        | `HEADER_INJECT='<link rel="stylesheet" href="/themes/terminal-green.css">'`   |
-| Terminal Cyan    | Fixed dark, cyan accent         | `HEADER_INJECT='<link rel="stylesheet" href="/themes/terminal-cyan.css">'`    |
-| Terminal Magenta | Fixed dark, magenta accent      | `HEADER_INJECT='<link rel="stylesheet" href="/themes/terminal-magenta.css">'` |
+| Theme            | Light and dark behavior             | `HEADER_INJECT`                                                               |
+| ---------------- | ----------------------------------- | ----------------------------------------------------------------------------- |
+| Base             | Follows the system preference       | Leave unset or use `HEADER_INJECT=`                                           |
+| Sepia            | Fixed light, warm-paper palette     | `HEADER_INJECT='<link rel="stylesheet" href="/themes/sepia.css">'`            |
+| Aria             | Follows the system preference       | `HEADER_INJECT='<link rel="stylesheet" href="/themes/aria.css">'`             |
+| Terminal Amber   | Fixed dark, amber accent            | `HEADER_INJECT='<link rel="stylesheet" href="/themes/terminal-amber.css">'`   |
+| Terminal Green   | Fixed dark, green accent            | `HEADER_INJECT='<link rel="stylesheet" href="/themes/terminal-green.css">'`   |
+| Terminal Cyan    | Fixed dark, cyan accent             | `HEADER_INJECT='<link rel="stylesheet" href="/themes/terminal-cyan.css">'`    |
+| Terminal Magenta | Fixed dark, magenta accent          | `HEADER_INJECT='<link rel="stylesheet" href="/themes/terminal-magenta.css">'` |
+| HN News          | Fixed light, full-post news feed    | `HEADER_INJECT='<link rel="stylesheet" href="/themes/hn-news.css">'`          |
+| TG Channel       | Fixed light, single-column messages | `HEADER_INJECT='<link rel="stylesheet" href="/themes/tg-channel.css">'`       |
+| ZAE              | Fixed light, compact document sheet | `HEADER_INJECT='<link rel="stylesheet" href="/themes/zae.css">'`              |
 
 Aria uses a neutral, system-sans presentation with light and dark palettes, a dashed square-line grid wash, and larger media radii. Sepia uses a fixed light palette and system-sans typography. All four Terminal variants use the same square, fixed-dark, Fira Code–first monospace design (loaded from Google Fonts when available); only their background, surface, accent, muted, border, and visited-link palettes differ.
+
+HN News is a compact, utilitarian full-post feed with a warm light canvas, orange accent, dense metadata, and a story-title hierarchy above each available post title; it does not collapse posts into summaries. TG Channel uses a cool page backdrop and one centered message column with the real channel avatar repeated for each entry, its channel title, and message time; it has no right-side profile card. ZAE uses a light, compact document sheet with a reduced identity header, technical toolbar, restrained rules, and monospace accents. These three themes deliberately fix `color-scheme: light`; they do not switch with the system preference.
+
+Each is an independent visual interpretation for BroadcastChannel, not a source adaptation or an official theme. No source code, CSS, fonts, or assets from Hacker News, Telegram, or Zed are bundled. See [NOTICE.md](./NOTICE.md) for provenance and non-affiliation details.
 
 `/themes/terminal-base.css` is an internal shared stylesheet imported by the four Terminal entry files. Do not load it directly: it has no standalone palette. There is no `/themes/terminal.css` entry point.
 
@@ -37,6 +44,20 @@ docker run -e 'HEADER_INJECT=<link rel="stylesheet" href="/themes/terminal-green
 ```
 
 Relative `/themes/...` URLs are served by the deployed BroadcastChannel site on every supported platform. Redeploy or restart after changing the environment variable.
+
+Fixed-light examples:
+
+```env
+HEADER_INJECT='<link rel="stylesheet" href="/themes/hn-news.css">'
+```
+
+```env
+HEADER_INJECT='<link rel="stylesheet" href="/themes/tg-channel.css">'
+```
+
+```env
+HEADER_INJECT='<link rel="stylesheet" href="/themes/zae.css">'
+```
 
 ## Custom CSS
 

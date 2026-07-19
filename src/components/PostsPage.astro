@@ -38,7 +38,7 @@ const hasNewerPosts = showNewer && afterCursor
     {
       posts.map((post) => (
         <li>
-          <PostEntry post={post} isDetail={isDetail} />
+          <PostEntry post={post} isDetail={isDetail} channelAvatar={channel.avatar} channelTitle={channel.title} />
         </li>
       ))
     }

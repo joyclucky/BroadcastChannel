@@ -9,6 +9,26 @@ const syntax = readFileSync(new URL('./content/syntax.css', import.meta.url), 'u
 const sepia = readFileSync(new URL('../../public/themes/sepia.css', import.meta.url), 'utf8')
 const aria = readFileSync(new URL('../../public/themes/aria.css', import.meta.url), 'utf8')
 const terminal = readFileSync(new URL('../../public/themes/terminal-base.css', import.meta.url), 'utf8')
+const hnNews = readFileSync(new URL('../../public/themes/hn-news.css', import.meta.url), 'utf8')
+const tgChannel = readFileSync(new URL('../../public/themes/tg-channel.css', import.meta.url), 'utf8')
+const zae = readFileSync(new URL('../../public/themes/zae.css', import.meta.url), 'utf8')
+const postEntry = readFileSync(new URL('../components/PostEntry.astro', import.meta.url), 'utf8')
+const postsPage = readFileSync(new URL('../components/PostsPage.astro', import.meta.url), 'utf8')
+
+const bearVariables = [
+  '--width',
+  '--font-main',
+  '--font-secondary',
+  '--font-scale',
+  '--background-color',
+  '--heading-color',
+  '--text-color',
+  '--link-color',
+  '--visited-color',
+  '--code-background-color',
+  '--code-color',
+  '--blockquote-color',
+]
 
 function compact(css: string): string {
   return css.replace(/\s+/g, ' ').trim()
@@ -69,5 +89,38 @@ describe('bear CSS contract', () => {
     expect(terminal).toContain('--body-padding-inline: clamp(1rem, 4vw, 2.5rem);')
     expect(terminal).toContain('--body-padding-inline: 1rem;')
     expect(compact(terminal)).toContain('padding: var(--body-padding-inline);')
+  })
+
+  it('loads fixed-light themes with the key Bear variables', () => {
+    for (const css of [hnNews, tgChannel, zae]) {
+      expect(css).toMatch(/color-scheme:\s*light;/)
+      expect(css).not.toMatch(/color-scheme:\s*light\s+dark;/)
+
+      for (const variable of bearVariables) {
+        expect(css).toContain(`${variable}:`)
+      }
+    }
+  })
+
+  it('keeps fixed-light theme padding tokens aligned with body padding', () => {
+    for (const css of [hnNews, tgChannel, zae]) {
+      expect(css.match(/--body-padding-inline: 0px;/g)).toHaveLength(1)
+    }
+
+    expect(compact(hnNews)).toContain('padding: 0 0 1rem;')
+    expect(compact(tgChannel)).toContain('padding: 0 var(--body-padding-inline);')
+    expect(compact(zae)).toContain('padding: 0 0 2rem;')
+  })
+
+  it('keeps optional feed hooks hidden in Base', () => {
+    expect(compact(feed)).toContain('.hn-story, .post-entry-avatar, .post-entry-author, .tg-message-meta { display: none; }')
+  })
+
+  it('wires optional feed hooks to real channel data', () => {
+    for (const className of ['hn-story', 'post-entry-avatar', 'post-entry-author', 'tg-message-meta']) {
+      expect(postEntry).toContain(`class="${className}"`)
+    }
+
+    expect(compact(postsPage)).toContain('channelAvatar={channel.avatar} channelTitle={channel.title}')
   })
 })

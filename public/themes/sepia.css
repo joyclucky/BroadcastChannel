@@ -45,12 +45,24 @@ hr {
 }
 
 .site-header {
+  align-items: center;
   margin-bottom: 0;
+}
+
+.site-header > .avatar-link,
+.site-header > .title {
+  height: 2.75rem;
+  align-items: center;
+}
+
+.site-header > .avatar-link {
+  display: inline-flex;
 }
 
 .site-header > .title > h1 {
   font-size: 1.25rem;
   font-weight: 600;
+  line-height: 1.25;
 }
 
 .channel-avatar {

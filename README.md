@@ -71,6 +71,9 @@ For detailed tutorials, see [Deploy your Astro site](https://docs.astro.build/en
 - Optional theme: [Sepia](https://github.com/Planetable/SiteTemplateSepia)
 - Optional theme inspiration: [Terminal](https://github.com/panr/hugo-theme-terminal)
 - Optional theme inspiration: [Aria](https://github.com/miantiao-me/astro-aria)
+- Optional theme visual inspiration: [Hacker News](https://news.ycombinator.com/) by Y Combinator, independently implemented with no official affiliation
+- Optional theme visual inspiration: [Telegram public channel previews](https://t.me/s/), independently implemented with no official affiliation with Telegram Messenger Inc.
+- Optional theme visual inspiration: [Zed's Agentic Engineering page](https://zed.dev/agentic-engineering), independently implemented with no official affiliation with Zed Industries, Inc.
 
 ## 🏗️ Deployment
 
@@ -182,12 +185,15 @@ Base is always loaded. Leave `HEADER_INJECT` empty to use Base, or load **exactl
 | Terminal Green   | `/themes/terminal-green.css`   |
 | Terminal Cyan    | `/themes/terminal-cyan.css`    |
 | Terminal Magenta | `/themes/terminal-magenta.css` |
+| HN News          | `/themes/hn-news.css`          |
+| TG Channel       | `/themes/tg-channel.css`       |
+| ZAE              | `/themes/zae.css`              |
 
 ```env
 HEADER_INJECT='<link rel="stylesheet" href="/themes/aria.css">'
 ```
 
-Do not load `/themes/terminal-base.css` directly; there is no `/themes/terminal.css`.
+HN News, TG Channel, and ZAE are fixed-light themes. Do not load `/themes/terminal-base.css` directly; there is no `/themes/terminal.css`.
 
 Full configuration, light/dark behavior, platform dashboard values, custom CSS, and security notes: **[THEMES.md](./THEMES.md)**. Theme credits: **[NOTICE.md](./NOTICE.md)**.
 
@@ -203,5 +209,5 @@ Full configuration, light/dark behavior, platform dashboard values, custom CSS, 
 ## ☕ Sponsor
 
 1. [Follow me on Telegram](https://t.me/miantiao_me)
-2. [Follow me on 𝕏](https://404.li/kai)
+2. [Follow me on 𝕏](https://404.li/x)
 3. [Sponsor me on GitHub](https://github.com/sponsors/miantiao-me)

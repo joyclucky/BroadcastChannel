@@ -8,29 +8,52 @@ const locale = getEnv(import.meta.env, 'LOCALE')
 const timezone = getEnv(import.meta.env, 'TIMEZONE')
 
 const { SITE_URL } = Astro.locals
-const { post, isDetail } = Astro.props as { post: Post; isDetail?: boolean }
+const { post, isDetail, channelAvatar, channelTitle } = Astro.props as {
+  post: Post
+  isDetail?: boolean
+  channelAvatar?: string
+  channelTitle: string
+}
 
 const channelName = getEnv(import.meta.env, 'CHANNEL')
 const commentsEnabled = getBooleanEnv(import.meta.env, 'COMMENTS')
 const reactionsEnabled = getBooleanEnv(import.meta.env, 'REACTIONS')
 
 const timeago = await formatPostTime(post.datetime, timezone, locale)
+const permalink = `${SITE_URL}posts/${post.id}`
 const contentHtml = sanitizeContentHtml(post.content)
 const hasContent = contentHtml.length > 0
+const hasStoryTitle = post.title.trim().length > 0
 const hasReactions = Boolean(reactionsEnabled && post.reactions?.length > 0)
 const hasTags = post.tags.length > 0
 ---
 
 <article class="post-entry" style={{ 'view-transition-name': `post-${post.id}` }}>
+  {channelAvatar && <img class="post-entry-avatar" src={channelAvatar} alt="" width="40" height="40" loading="lazy" />}
+  <p class="post-entry-author">{channelTitle}</p>
+  {
+    hasStoryTitle && (
+      <div class="hn-story">
+        <h2>
+          <a href={permalink}>{post.title}</a>
+        </h2>
+      </div>
+    )
+  }
   <div class="post-meta">
     <span class="timeline-dot" aria-hidden="true"></span>
     <p>
-      <a href={`${SITE_URL}posts/${post.id}`} title={post.datetime}>
+      <a href={permalink} title={post.datetime}>
         <time datetime={post.datetime} title={timeago}>{timeago}</time>
       </a>
     </p>
   </div>
   {hasContent && <div class="post-content content" set:html={contentHtml} />}
+  <p class="tg-message-meta">
+    <a href={permalink} title={post.datetime}>
+      <time datetime={post.datetime} title={timeago}>{timeago}</time>
+    </a>
+  </p>
   {
     hasReactions && (
       <div class="post-reactions">
