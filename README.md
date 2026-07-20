@@ -52,6 +52,7 @@ English | [简体中文](./README.zh-cn.md)
 - [小报童优惠与排行榜](https://youhui.xiaobaoto.com/)
 - [热干面拌 10 号土豆泥](https://memo.moran.im/)
 - [万事屋工程部](https://t.wanshiwu.fyi/)
+- [折腾啥 @xream](https://telegram.zhetengsha.eu.org)
 
 ### Platform
 
