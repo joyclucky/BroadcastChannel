@@ -1,3 +1,4 @@
+import type { Env } from './env'
 import { getTargetWhitelist } from './env'
 
 const DEFAULT_TARGET_WHITELIST = [
@@ -24,11 +25,11 @@ export function resolveStaticProxyTarget(rawTarget: string): URL {
   return new URL(normalizedTarget)
 }
 
-export function isStaticProxyWhitelisted(target: URL): boolean {
+export function isStaticProxyWhitelisted(target: URL, env?: Env): boolean {
   const isAllowedProtocol = target.protocol === 'http:' || target.protocol === 'https:'
   const targetWhitelist = [
     ...DEFAULT_TARGET_WHITELIST,
-    ...getTargetWhitelist({ TARGET_WHITELIST: import.meta.env.TARGET_WHITELIST }),
+    ...getTargetWhitelist(env),
   ]
   return isAllowedProtocol && targetWhitelist.some(domain => target.hostname === domain || target.hostname.endsWith(`.${domain}`))
 }
@@ -45,7 +46,7 @@ function getForwardedRequestHeaders(request: Request): Headers {
   return headers
 }
 
-export async function createStaticProxyResponse(request: Request, rawTarget: string): Promise<Response> {
+export async function createStaticProxyResponse(request: Request, rawTarget: string, env?: Env): Promise<Response> {
   let target: URL
 
   try {
@@ -55,7 +56,7 @@ export async function createStaticProxyResponse(request: Request, rawTarget: str
     return new Response('Invalid proxy target', { status: 400 })
   }
 
-  if (!isStaticProxyWhitelisted(target)) {
+  if (!isStaticProxyWhitelisted(target, env)) {
     return new Response('Proxy target not allowed', { status: 403 })
   }
 
