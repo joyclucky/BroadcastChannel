@@ -1,6 +1,10 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
+interface ImportMetaEnv {
+  readonly TARGET_WHITELIST?: string
+}
+
 declare namespace App {
   interface Locals {
     SITE_URL: string
