@@ -1,7 +1,4 @@
-import type { Env } from './env'
-import { getTargetWhitelist } from './env'
-
-const DEFAULT_TARGET_WHITELIST = [
+const TARGET_WHITELIST = [
   't.me',
   'telegram.org',
   'telegram.me',
@@ -25,13 +22,8 @@ export function resolveStaticProxyTarget(rawTarget: string): URL {
   return new URL(normalizedTarget)
 }
 
-export function isStaticProxyWhitelisted(target: URL, env?: Env): boolean {
-  const isAllowedProtocol = target.protocol === 'http:' || target.protocol === 'https:'
-  const targetWhitelist = [
-    ...DEFAULT_TARGET_WHITELIST,
-    ...getTargetWhitelist(env),
-  ]
-  return isAllowedProtocol && targetWhitelist.some(domain => target.hostname === domain || target.hostname.endsWith(`.${domain}`))
+export function isStaticProxyWhitelisted(target: URL): boolean {
+  return TARGET_WHITELIST.some(domain => target.hostname === domain || target.hostname.endsWith(`.${domain}`))
 }
 
 function getForwardedRequestHeaders(request: Request): Headers {
@@ -46,7 +38,7 @@ function getForwardedRequestHeaders(request: Request): Headers {
   return headers
 }
 
-export async function createStaticProxyResponse(request: Request, rawTarget: string, env?: Env): Promise<Response> {
+export async function createStaticProxyResponse(request: Request, rawTarget: string): Promise<Response> {
   let target: URL
 
   try {
@@ -56,20 +48,12 @@ export async function createStaticProxyResponse(request: Request, rawTarget: str
     return new Response('Invalid proxy target', { status: 400 })
   }
 
-  if (!isStaticProxyWhitelisted(target, env)) {
+  if (!isStaticProxyWhitelisted(target)) {
     return new Response('Proxy target not allowed', { status: 403 })
   }
 
-  let response: Response
-
-  try {
-    response = await fetch(target.toString(), {
-      headers: getForwardedRequestHeaders(request),
-    })
-  }
-  catch {
-    return new Response('Upstream fetch failed', { status: 502 })
-  }
-
+  const response = await fetch(target.toString(), {
+    headers: getForwardedRequestHeaders(request),
+  })
   return new Response(response.body, response)
 }
